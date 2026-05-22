@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact — Aryan Iyer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root { --black: #03060f; --white: #e8f0ff; --gray-light: #b8cce8; --gray-mid: #6a84aa; --accent: #4da6ff; --accent-dark: #1a7acc; --card-bg: rgba(8,16,40,0.7); --card-border: rgba(77,166,255,0.15);
+      --accent-glow: rgba(77,166,255,0.35); --transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1); }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--black); color: var(--white); line-height: 1.6; overflow-x: hidden; }
+    a { text-decoration: none; color: inherit; }
+    .display { font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.03em; line-height: 0.95; }
+    ::-webkit-scrollbar { width: 4px; } ::-webkit-scrollbar-track { background: var(--black); } ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 2px; }
+
+    /* HEADER */
+    header { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1.25rem 5vw; background: rgba(3,6,15,0.75); backdrop-filter: blur(16px); border-bottom: 1px solid rgba(77,166,255,0.15); transition: var(--transition); }
+    header.scrolled { box-shadow: 0 4px 40px rgba(0,10,40,0.7), 0 0 20px rgba(77,166,255,0.08); }
+    .nav-logo { font-family: 'Bebas Neue', sans-serif; font-size: 1.6rem; letter-spacing: 0.08em; }
+    .nav-logo span { color: var(--accent); text-shadow: 0 0 12px rgba(77,166,255,0.4); }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a { font-size: 0.82rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray-mid); transition: color var(--transition); position: relative; }
+    .nav-links a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 1px; background: var(--accent); transition: width var(--transition); }
+    .nav-links a:hover, .nav-links a.active { color: var(--white); }
+    .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
+    .hamburger span { display: block; width: 26px; height: 2px; background: var(--white); transition: var(--transition); transform-origin: center; }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .mobile-menu { display: none; position: fixed; top: 68px; left: 0; right: 0; background: rgba(3,6,15,0.97); backdrop-filter: blur(20px); padding: 2rem 5vw 3rem; z-index: 99; border-bottom: 1px solid var(--card-border); transform: translateY(-10px); opacity: 0; transition: var(--transition); }
+    .mobile-menu.open { display: block; transform: translateY(0); opacity: 1; }
+    .mobile-menu ul { list-style: none; display: flex; flex-direction: column; gap: 1.5rem; }
+    .mobile-menu a { font-size: 1.8rem; font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.06em; color: var(--gray-mid); transition: color var(--transition); }
+    .mobile-menu a:hover { color: var(--accent); }
+
+    /* PAGE HERO */
+    .page-hero { min-height: 45vh; display: flex; flex-direction: column; justify-content: flex-end; padding: 10rem 5vw 5rem; position: relative; overflow: hidden; background: linear-gradient(180deg, rgba(5,15,50,0.7) 0%, transparent 100%); }
+    .page-hero::after { content: ''; position: absolute; bottom: 0; left: 5vw; right: 5vw; height: 1px; background: linear-gradient(to right, var(--accent), transparent); opacity: 0.3; }
+    .page-eyebrow { display: inline-flex; align-items: center; gap: 0.6rem; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); font-weight: 500; margin-bottom: 1rem; }
+    .page-eyebrow::before { content: ''; width: 20px; height: 1px; background: var(--accent); }
+    .page-title { font-size: clamp(4rem, 9vw, 8rem); color: var(--white); }
+    .page-subtitle { font-size: 1rem; color: var(--gray-mid); max-width: 520px; font-weight: 300; margin-top: 1.2rem; }
+
+    /* CONTACT SECTION */
+    .contact-section { padding: 7rem 5vw; display: grid; grid-template-columns: 1fr 1.4fr; gap: 6rem; align-items: start; }
+    .contact-info h2 { font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 1.2rem; }
+    .contact-info p { font-size: 0.95rem; color: var(--gray-mid); font-weight: 300; line-height: 1.8; margin-bottom: 3rem; }
+    .contact-item { display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 1.8rem; }
+    .contact-icon { width: 44px; height: 44px; border-radius: 4px; background: rgba(77,166,255,0.15); border: 1px solid rgba(77,166,255,0.15); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 1.1rem; }
+    .contact-item-label { font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); font-weight: 500; margin-bottom: 0.25rem; font-family: 'DM Mono', monospace; }
+    .contact-item-value { font-size: 0.92rem; color: var(--white); font-weight: 300; }
+    .contact-item-value a { color: var(--white); transition: color var(--transition); }
+    .contact-item-value a:hover { color: var(--accent); }
+    .availability-badge { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(77,166,255,0.15); border: 1px solid rgba(77,166,255,0.15); border-radius: 100px; padding: 0.5rem 1.1rem; font-size: 0.75rem; color: var(--accent); font-family: 'DM Mono', monospace; letter-spacing: 0.08em; margin-top: 2rem; }
+    .availability-dot { width: 7px; height: 7px; border-radius: 50%; background: #4caf76; animation: pulse 2s infinite; }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+    /* FORM */
+    .contact-form { display: flex; flex-direction: column; gap: 1rem; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+    .form-group label { font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gray-mid); font-weight: 500; }
+    .form-group input, .form-group textarea, .form-group select { background: var(--card-bg); border: 1px solid var(--card-border); backdrop-filter: blur(10px); border-radius: 4px; padding: 0.85rem 1rem; color: var(--white); font-family: 'DM Sans', sans-serif; font-size: 0.92rem; font-weight: 300; outline: none; transition: border-color var(--transition); resize: none; }
+    .form-group input::placeholder, .form-group textarea::placeholder { color: #444; }
+    .form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-color: var(--accent); }
+    .form-group textarea { min-height: 130px; }
+    .form-group select option { background: var(--card-bg); }
+    .btn-primary { display: inline-flex; align-items: center; gap: 0.7rem; background: var(--accent); color: #03060f; padding: 0.85rem 2rem; border-radius: 3px; font-size: 0.82rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; border: 2px solid var(--accent); cursor: pointer; transition: var(--transition); position: relative; overflow: hidden; width: 100%; justify-content: center; margin-top: 0.5rem; }
+    .btn-primary::before { content: ''; position: absolute; inset: 0; background: #03060f; transform: translateX(-101%); transition: transform var(--transition); }
+    .btn-primary:hover { color: var(--accent); }
+    .btn-primary:hover::before { transform: translateX(0); }
+    .btn-primary span, .btn-primary svg { position: relative; z-index: 1; }
+
+    /* FAQ */
+    .faq-section { padding: 7rem 5vw; background: rgba(5,10,30,0.6); }
+    .section-label { display: inline-flex; align-items: center; gap: 0.6rem; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); font-weight: 500; margin-bottom: 1rem; }
+    .section-label::before { content: ''; width: 20px; height: 1px; background: var(--accent); }
+    .section-title { font-size: clamp(2.8rem, 5vw, 4.5rem); margin-bottom: 3rem; }
+    .faq-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+    .faq-item { background: var(--card-bg); border: 1px solid var(--card-border); backdrop-filter: blur(10px); border-radius: 6px; padding: 1.6rem; transition: var(--transition); }
+    .faq-item:hover { border-color: rgba(77,166,255,0.15); }
+    .faq-item h4 { font-size: 0.95rem; font-weight: 600; margin-bottom: 0.6rem; color: var(--white); }
+    .faq-item p { font-size: 0.85rem; color: var(--gray-mid); font-weight: 300; line-height: 1.7; }
+
+    /* ANIMATIONS */
+    .fade-up { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+    .fade-up.delay-1 { transition-delay: 0.1s; }
+    .divider { width: 100%; height: 1px; background: linear-gradient(to right, var(--card-border), transparent); }
+
+    /* FOOTER */
+    footer { background: rgba(2,4,12,0.9); border-top: 1px solid var(--card-border); padding: 4rem 5vw 2.5rem; }
+    .footer-inner { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem; }
+    .footer-brand .footer-logo { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; letter-spacing: 0.08em; margin-bottom: 0.8rem; }
+    .footer-logo span { color: var(--accent); }
+    .footer-brand p { font-size: 0.85rem; color: var(--gray-mid); font-weight: 300; line-height: 1.7; max-width: 260px; }
+    .footer-col h4 { font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-bottom: 1.2rem; font-weight: 500; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.7rem; }
+    .footer-col ul li a { font-size: 0.85rem; color: var(--gray-mid); transition: color var(--transition); font-weight: 300; }
+    .footer-col ul li a:hover { color: var(--white); }
+    .footer-bottom { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; padding-top: 2rem; border-top: 1px solid var(--card-border); }
+    .footer-copy { font-size: 0.78rem; color: var(--gray-mid); font-weight: 300; }
+    .social-links { display: flex; gap: 0.8rem; }
+    .social-link { width: 38px; height: 38px; border-radius: 4px; border: 1px solid var(--card-border); display: flex; align-items: center; justify-content: center; color: var(--gray-mid); transition: var(--transition); }
+    .social-link:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-3px); }
+
+    @media (max-width: 1024px) { .footer-inner { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 768px) { .nav-links { display: none; } .hamburger { display: flex; } .contact-section { grid-template-columns: 1fr; gap: 3rem; } .form-row { grid-template-columns: 1fr; } .faq-grid { grid-template-columns: 1fr; } .footer-inner { grid-template-columns: 1fr 1fr; } .footer-bottom { flex-direction: column; text-align: center; } }
+    @media (max-width: 480px) { .footer-inner { grid-template-columns: 1fr; } }
+  
+    /* ===== CUSTOM CURSOR ===== */
+    * { cursor: none !important; }
+    #cursor-dot {
+      position: fixed; top: 0; left: 0; z-index: 9999;
+      width: 8px; height: 8px; border-radius: 50%;
+      background: #4da6ff;
+      box-shadow: 0 0 10px rgba(77,166,255,0.9), 0 0 20px rgba(77,166,255,0.5);
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+      transition: width 0.2s ease, height 0.2s ease, background 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+      will-change: transform;
+    }
+    #cursor-ring {
+      position: fixed; top: 0; left: 0; z-index: 9998;
+      width: 36px; height: 36px; border-radius: 50%;
+      border: 1px solid rgba(77,166,255,0.6);
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+      transition: width 0.25s ease, height 0.25s ease, border-color 0.25s ease, opacity 0.2s ease;
+      will-change: transform;
+    }
+    #cursor-trail-canvas {
+      position: fixed; inset: 0; z-index: 9997;
+      pointer-events: none;
+      width: 100vw; height: 100vh;
+    }
+    body.cursor-hover #cursor-dot {
+      width: 12px; height: 12px;
+      background: #fff;
+      box-shadow: 0 0 16px rgba(77,166,255,1), 0 0 32px rgba(77,166,255,0.6);
+    }
+    body.cursor-hover #cursor-ring {
+      width: 54px; height: 54px;
+      border-color: rgba(77,166,255,0.9);
+      box-shadow: 0 0 16px rgba(77,166,255,0.25);
+    }
+    body.cursor-click #cursor-dot {
+      width: 6px; height: 6px;
+      box-shadow: 0 0 20px rgba(77,166,255,1), 0 0 40px rgba(77,166,255,0.8);
+    }
+    body.cursor-click #cursor-ring {
+      width: 20px; height: 20px;
+      border-color: rgba(77,166,255,1);
+    }
+    @media (hover: none) and (pointer: coarse) {
+      * { cursor: auto !important; }
+      #cursor-dot, #cursor-ring, #cursor-trail-canvas { display: none !important; }
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- Custom Cursor -->
+  <canvas id="cursor-trail-canvas"></canvas>
+  <div id="cursor-dot"></div>
+  <div id="cursor-ring"></div>
+
+  <header id="site-header">
+    <a href="index.html" class="nav-logo">Cronton Production</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="work.html">Work</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html" class="active">Contact</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <ul>
+      <li><a href="index.html" class="mobile-link">Home</a></li>
+      <li><a href="work.html" class="mobile-link">Work</a></li>
+      <li><a href="about.html" class="mobile-link">About</a></li>
+      <li><a href="contact.html" class="mobile-link">Contact</a></li>
+    </ul>
+  </div>
+
+  <!-- PAGE HERO -->
+  <div class="page-hero">
+    <div class="page-eyebrow">Let's Create Together</div>
+    <h1 class="page-title display">Contact</h1>
+    <p class="page-subtitle">Have a project in mind? Whether it's animation, illustration, or motion — I'd love to hear about it.</p>
+  </div>
+
+  <!-- CONTACT SECTION -->
+  <section class="contact-section">
+    <div class="fade-up">
+      <h2 class="display">Got a Project<br><span style="color:var(--accent)">In Mind?</span></h2>
+      <p>Whether it's a short film, a brand animation, or a personal art commission — let's talk about bringing your vision to life.</p>
+
+      <div class="contact-item">
+        <div class="contact-icon">✉️</div>
+        <div>
+          <div class="contact-item-label">Email</div>
+          <div class="contact-item-value"><a href="mailto:aryaniyer49@gmail.com">aryaniyer49@gmail.com</a></div>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">📍</div>
+        <div>
+          <div class="contact-item-label">Location</div>
+          <div class="contact-item-value">India — Available Worldwide</div>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">⏱️</div>
+        <div>
+          <div class="contact-item-label">Response Time</div>
+          <div class="contact-item-value">Usually within 24–48 hours</div>
+        </div>
+      </div>
+      <div class="availability-badge">
+        <span class="availability-dot"></span>
+        Available for new projects
+      </div>
+    </div>
+
+    <div class="fade-up delay-1">
+      <form class="contact-form" onsubmit="handleSubmit(event)">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="name">Your Name</label>
+            <input type="text" id="name" name="name" placeholder="Your Name" required />
+          </div>
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" name="email" placeholder="hello@email.com" required />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="service">Service Needed</label>
+          <select id="service" name="service">
+            <option value="">Select a service...</option>
+            <option>2D Animation</option>
+            <option>Illustration & Art</option>
+            <option>Motion Graphics</option>
+            <option>Storyboarding</option>
+            <option>Other / Unsure</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="subject">Subject</label>
+          <input type="text" id="subject" name="subject" placeholder="Subject" />
+        </div>
+        <div class="form-group">
+          <label for="message">Your Message</label>
+          <textarea id="message" name="message" placeholder="Please Enter your Feedback." required></textarea>
+        </div>
+        <button type="submit" class="btn-primary">
+          <span>Send Message</span>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 8l12-6-6 12V9L2 8z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </form>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- FAQ -->
+  <section class="faq-section">
+    <div class="section-label">Quick Answers</div>
+    <h2 class="section-title display">FAQ</h2>
+    <div class="faq-grid">
+      <div class="faq-item fade-up">
+        <h4>How long does a project take?</h4>
+        <p>It depends on scope. A short animation loop may take 1–2 weeks; a full explainer video or short film can take 4–8 weeks. I'll give you a clear timeline after our initial chat.</p>
+      </div>
+      <div class="faq-item fade-up delay-1">
+        <h4>What's your pricing like?</h4>
+        <p>Pricing is project-based and depends on complexity, length, and timeline. Reach out with project details and I'll send a custom quote within 48 hours.</p>
+      </div>
+      <div class="faq-item fade-up">
+        <h4>Do you work with international clients?</h4>
+        <p>Absolutely. I collaborate with clients across the globe. Communication is remote-friendly — video calls, email, and async feedback all work great.</p>
+      </div>
+      <div class="faq-item fade-up delay-1">
+        <h4>What files do you deliver?</h4>
+        <p>Typically MP4/MOV for animation, PNG/PSD/AI for illustrations, and PDF/JPG for storyboards. I can accommodate special format requests too.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="footer-logo">Cronton</div>
+        <p>Animator & Artist turning imagination into compelling visual experiences. Based in India, available worldwide.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Pages</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="work.html">Work</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="work.html">2D Animation</a></li>
+          <li><a href="work.html">Illustration</a></li>
+          <li><a href="work.html">Motion Graphics</a></li>
+          <li><a href="work.html">Storyboarding</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="mailto:aryaniyer49@gmail.com">aryaniyer49@gmail.com</a></li>
+          <li><a href="contact.html">Project Inquiry</a></li>
+          <li><a href="#">Resume / CV</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copy">© 2025 Cronton . Aryan Iyer. New Delhi.</p>
+      <nav class="social-links">
+        <a href="https://www.instagram.com/aryan_iyer1234/" class="social-link" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+        <a href="https://www.behance.net/crontongamer" class="social-link" aria-label="Behance"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M9 12c1.1 0 2-.9 2-2s-.9-2-2-2H4v4h5zm.3 2H4v4.5h5.3c1.4 0 2.5-1 2.5-2.3 0-1.2-1.1-2.2-2.5-2.2zM20 10h-5v1.5h5V10zm.4 3.5c-.4-.3-.9-.5-1.4-.5s-1.1.1-1.5.4c-.4.3-.7.8-.7 1.4h4.4c0-.6-.4-1.1-.8-1.3zM22 14.5c0 .3 0 .7-.1 1H17c.1.6.4 1 .9 1.3.4.2.9.3 1.4.3.6 0 1.1-.1 1.4-.4.2-.2.4-.4.5-.7h1.7c-.3 1.6-1.7 2.5-3.7 2.5-1.1 0-2-.3-2.7-.9-.7-.6-1-1.5-1-2.6 0-1 .3-2 1-2.7.7-.7 1.6-1 2.8-1 1.4 0 2.4.5 3 1.4.4.6.7 1.4.7 2.8z"/></svg></a>
+        <a href="https://www.youtube.com/@Cronton-Production" class="social-link" aria-label="YouTube"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></a>
+        <a href="https://www.linkedin.com/in/cronton-gamer-8884192b9/" class="social-link" aria-label="LinkedIn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="2" width="20" height="20" rx="4"/><path d="M7 10v7M7 7v.5M11 17v-4.5c0-1.4 1-2.5 2.5-2.5S16 11.1 16 12.5V17M11 10v7"/></svg></a>
+      </nav>
+    </div>
+  </footer>
+
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    hamburger.addEventListener('click', () => { const isOpen = hamburger.classList.toggle('open'); mobileMenu.classList.toggle('open', isOpen); hamburger.setAttribute('aria-expanded', isOpen); document.body.style.overflow = isOpen ? 'hidden' : ''; });
+    document.querySelectorAll('.mobile-link').forEach(link => { link.addEventListener('click', () => { hamburger.classList.remove('open'); mobileMenu.classList.remove('open'); hamburger.setAttribute('aria-expanded','false'); document.body.style.overflow=''; }); });
+    const observer = new IntersectionObserver((entries) => { entries.forEach(e => { if(e.isIntersecting){e.target.classList.add('visible');observer.unobserve(e.target);} }); }, { threshold: 0.12 });
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+    const header = document.getElementById('site-header');
+    window.addEventListener('scroll', () => { header.classList.toggle('scrolled', window.scrollY > 30); });
+    function handleSubmit(e) {
+      e.preventDefault();
+      const btn = e.target.querySelector('button[type="submit"] span');
+      btn.textContent = 'Message Sent ✓';
+      e.target.reset();
+      setTimeout(() => { btn.textContent = 'Send Message'; }, 3000);
+    }
+  </script>
+
+  <script>
+    /* ===== CURSOR ANIMATION ===== */
+    (function() {
+      const dot   = document.getElementById('cursor-dot');
+      const ring  = document.getElementById('cursor-ring');
+      const canvas = document.getElementById('cursor-trail-canvas');
+      if (!dot || !ring || !canvas) return;
+
+      const ctx = canvas.getContext('2d');
+      let W = window.innerWidth, H = window.innerHeight;
+      canvas.width = W; canvas.height = H;
+      window.addEventListener('resize', () => {
+        W = window.innerWidth; H = window.innerHeight;
+        canvas.width = W; canvas.height = H;
+      });
+
+      let mouseX = W / 2, mouseY = H / 2;
+      let ringX  = W / 2, ringY  = H / 2;
+      let dotX   = W / 2, dotY   = H / 2;
+
+      // Trail particles
+      const trail = [];
+      const MAX_TRAIL = 22;
+
+      document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        // Add trail point
+        trail.push({ x: mouseX, y: mouseY, life: 1.0, size: 3 + Math.random() * 2 });
+        if (trail.length > MAX_TRAIL) trail.shift();
+      });
+
+      // Hover state
+      const hoverTargets = 'a, button, .portfolio-card, .service-card, .svc-card, .filter-btn, .skill-tag, .stat-item, .faq-item, input, textarea, select';
+      document.querySelectorAll(hoverTargets).forEach(el => {
+        el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+        el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+      });
+
+      document.addEventListener('mousedown', () => {
+        document.body.classList.add('cursor-click');
+        // Burst particles
+        for (let i = 0; i < 10; i++) {
+          const angle = (Math.PI * 2 / 10) * i;
+          const speed = 2 + Math.random() * 3;
+          burst.push({ x: mouseX, y: mouseY, vx: Math.cos(angle) * speed, vy: Math.sin(angle) * speed, life: 1.0, size: 2 + Math.random() * 2 });
+        }
+      });
+      document.addEventListener('mouseup', () => {
+        setTimeout(() => document.body.classList.remove('cursor-click'), 150);
+      });
+
+      // Burst particles
+      const burst = [];
+
+      function lerp(a, b, t) { return a + (b - a) * t; }
+
+      function animate() {
+        requestAnimationFrame(animate);
+        ctx.clearRect(0, 0, W, H);
+
+        // Smooth ring follow
+        ringX = lerp(ringX, mouseX, 0.12);
+        ringY = lerp(ringY, mouseY, 0.12);
+        dotX  = lerp(dotX, mouseX, 0.28);
+        dotY  = lerp(dotY, mouseY, 0.28);
+
+        dot.style.left  = dotX + 'px';
+        dot.style.top   = dotY + 'px';
+        ring.style.left = ringX + 'px';
+        ring.style.top  = ringY + 'px';
+
+        // Draw comet trail
+        for (let i = 0; i < trail.length; i++) {
+          const p = trail[i];
+          const alpha = (i / trail.length) * 0.55;
+          const size  = (i / trail.length) * 4;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, Math.max(0.5, size), 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(77,166,255,${alpha})`;
+          ctx.shadowBlur = 8;
+          ctx.shadowColor = `rgba(77,166,255,${alpha * 0.7})`;
+          ctx.fill();
+          ctx.shadowBlur = 0;
+        }
+
+        // Draw burst particles
+        for (let i = burst.length - 1; i >= 0; i--) {
+          const p = burst[i];
+          p.x += p.vx;
+          p.y += p.vy;
+          p.vx *= 0.92;
+          p.vy *= 0.92;
+          p.life -= 0.04;
+          if (p.life <= 0) { burst.splice(i, 1); continue; }
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.size * p.life, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(77,166,255,${p.life * 0.9})`;
+          ctx.shadowBlur = 12;
+          ctx.shadowColor = 'rgba(77,166,255,0.8)';
+          ctx.fill();
+          ctx.shadowBlur = 0;
+        }
+      }
+
+      animate();
+    })();
+  </script>
+
+</body>
+</html>
